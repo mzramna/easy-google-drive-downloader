@@ -9,62 +9,66 @@ case "$GOOGLE_SERVICEFILEID" in
   echo "insert the google document EXTENSION to download(to documents the suported formats are [docx/odt/rtf/PDF/txt/html/epub])";
   read FILEEXTENSION;
   case "$FILEEXTENSION" in
-  "docx" | "odt" | "rtf" | "pdf" | "txt" | "epub")
-    wget -q --show-progress -c "https://docs.google.com/document/export?format=$FILEEXTENSION&id=$FILEID&includes_info_params=true" -O "$FILENAME.$FILEEXTENSION"
-  ;;
-  "html")
-      wget -q --show-progress -c "https://docs.google.com/document/export?format=zip&id=$FILEID&includes_info_params=true" -O "$FILENAME.zip"
-  ;;
-  *)
-  echo "this is not a suported format,so pdf will be downloaded"
-      wget -q --show-progress -c "https://docs.google.com/document/export?format=pdf&id=$FILEID&includes_info_params=true" -O "$FILENAME.pdf"
-  ;;
-esac
+	  "docx" | "odt" | "rtf" | "pdf" | "txt" | "epub")
+	  ;;
+	  "html")
+		FILEEXTENSION="zip"
+	  ;;
+	  *)
+	  FILEEXTENSION="pdf"
+		echo "this is not a suported format,so pdf will be downloaded"
+	  ;;
+  esac
+  wget -q --show-progress -c "https://docs.google.com/document/export?format=$FILEEXTENSION&id=$FILEID&includes_info_params=true" -O "$FILENAME.$FILEEXTENSION"\
+  && echo "" && echo "the file $FILENAME.$FILEEXTENSION has been fully downloaded"
 ;;
 "spreadsheets")
   echo "insert the google document EXTENSION to download(to presentation the suported formats are [xlsx/ods/PDF/html/csv/tsv])";
   read FILEEXTENSION;
   case "$FILEEXTENSION" in
-  "xlsx" | "ods" | "pdf" | "csv" | "tsv")
-    wget -q --show-progress -c "https://docs.google.com/spreadsheets/export?format=$FILEEXTENSION&id=$FILEID&includes_info_params=true" -O "$FILENAME.$FILEEXTENSION"
-  ;;
-  "html")
-   wget -q --show-progress -c "https://docs.google.com/spreadsheets/export?format=zip/&id=$FILEID&includes_info_params=true" -O "$FILENAME.zip"
-  ;;
-  *)
-  echo "this is not a suported format,so pdf will be downloaded"
-  wget -q --show-progress -c "https://docs.google.com/spreadsheets/export?format=pdf&id=$FILEID&includes_info_params=true" -O "$FILENAME.pdf"
-  ;;
+	  "xlsx" | "ods" | "pdf" | "csv" | "tsv")
+	  ;;
+	  "html")
+		FILEEXTENSION="zip"
+	  ;;
+	  *)
+		FILEEXTENSION="pdf"
+		echo "this is not a suported format,so pdf will be downloaded"
+	  ;;
   esac
+  wget -q --show-progress -c "https://docs.google.com/spreadsheets/export?format=$FILEEXTENSION&id=$FILEID&includes_info_params=true" -O "$FILENAME.$FILEEXTENSION"\
+  && echo "" && echo "the file $FILENAME.$FILEEXTENSION has been fully downloaded"
 ;;
 "presentation")
   echo "insert the google document EXTENSION to download(to presentation the suported formats are[pptx/odp/PDF/txt/jpg/png/svg])";
   read FILEEXTENSION;
   case "$FILEEXTENSION" in
-  "pptx" | "odp" | "pdf" | "txt" | "jpg" | "png" | "svg")
-  wget -q --show-progress -c "https://docs.google.com/presentation/export?format=$FILEEXTENSION&id=$FILEID&includes_info_params=true" -O "$FILENAME.$FILEEXTENSION"
-  ;;
-  "html")
-   wget -q --show-progress -c "https://docs.google.com/presentation/export?format=zip/&id=$FILEID&includes_info_params=true" -O "$FILENAME.zip"
-  ;;
-  *)
-  echo "this is not a suported format,so pdf will be downloaded"
-  wget -q --show-progress -c "https://docs.google.com/presentation/export?format=pdf&id=$FILEID&includes_info_params=true" -O "$FILENAME.pdf"
-  ;;
+	  "pptx" | "odp" | "pdf" | "txt" | "jpg" | "png" | "svg")
+	  ;;
+	  "html")
+		FILEEXTENSION="zip"
+	  ;;
+	  *)
+		FILEEXTENSION="pdf"
+	  echo "this is not a suported format,so pdf will be downloaded"
+	  ;;
   esac
+  wget -q --show-progress -c "https://docs.google.com/presentation/export?format=$FILEEXTENSION&id=$FILEID&includes_info_params=true" -O "$FILENAME.$FILEEXTENSION"\
+  && echo "" && echo "the file $FILENAME.$FILEEXTENSION has been fully downloaded"
 ;;
 "drawings")
   echo "insert the google document EXTENSION to download(if you insert a wrong or not suportated file extension it may not work)";
   read FILEEXTENSION;
   case "$FILEEXTENSION" in
-  "jpg" | "png" | "svg" | "pdf")
-    wget -q --show-progress -c "https://docs.google.com/drawings/export?format=$FILEEXTENSION&id=$FILEID&includes_info_params=true" -O "$FILENAME.$FILEEXTENSION"
-  ;;
-  *)
-  echo "this is not a suported format,so pdf will be downloaded"
-  wget -q --show-progress -c "https://docs.google.com/drawings/export?format=pdf&id=$FILEID&includes_info_params=true" -O "$FILENAME.pdf"
-  ;;
+	  "jpg" | "png" | "svg" | "pdf")
+	  ;;
+	  *)
+		FILEEXTENSION="pdf"
+	  echo "this is not a suported format,so pdf will be downloaded"
+	  ;;
   esac
+  wget -q --show-progress -c "https://docs.google.com/drawings/export?format=$FILEEXTENSION&id=$FILEID&includes_info_params=true" -O "$FILENAME.$FILEEXTENSION"\
+  && echo "" && echo "the file $FILENAME.$FILEEXTENSION has been fully downloaded"
 ;;
 *)
 echo "this is not a suported format"
