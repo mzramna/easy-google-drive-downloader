@@ -5,10 +5,11 @@ echo Start
 #pidlist=()
 
 function download_file {
-FILEID=$1;
-read FILEID;#any unknown error made this just work with this,i'll analize and fix asap
+INPUT=$1;
+read INPUT;#any unknown error made this just work with this,i'll analize and fix asap
 #unknown error made this the only way to get working by now: into the list begin by the second line of the file,the links have to be separated by an blank line,otherwise it will not work
-FILEID="$(echo $FILEID | sed -n 's#.*\https\:\/\/drive\.google\.com/file/d/\([^.]*\)\/view.*#\1#;p')";
+FILEID="$(echo $INPUT | sed -n 's#.*\/d\/\([^.]*\)\/.*#\1#;s#.*\?id\=\([^.]*\)\&.*#\1#;p')";
+echo $FILEID
 FILENAME="$(wget -q --show-progress -O - "https://drive.google.com/file/d/$FILEID/view" | sed -n -e 's!.*<title>\(.*\)\ \-\ Google\ Drive</title>.*!\1!p')";
 CONFIRM_CODE=$(wget -q --show-progress --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate "https://docs.google.com/uc?export=download&id=$FILEID" -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')
 wget -q --show-progress --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$CONFIRM_CODE&id=$FILEID" -c -O "$FILENAME" && rm -rf /tmp/cookies.txt;
