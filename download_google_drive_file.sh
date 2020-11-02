@@ -1,4 +1,27 @@
 #!/bin/bash
+checkurl() {
+	FILEID=$1
+	if echo $FILEID | sed -n 's#.*\https\:\/\/drive\.google\.com/file/d/\([^.]*\)\/view.*#\1#;p' | wc -l; then
+		echo "url valida"
+		return 1
+	else
+		echo "Please input 'https://drive.google.com/file/d/xxxxxxx/view'"
+		return 0
+	fi
+}
+check_quota(){
+	FILENAME=$1
+	if grep -q "Quota exceeded" "$FILENAME"; then
+		rm $FILENAME && \
+		echo "Google Drive Limited (Quota Exceeded)" && \
+		echo "file $FILENAME can NOT be downloaded"
+		return 0
+	else
+		echo "file $FILENAME has been downloaded"
+		return 1
+	fi
+
+}
 if [ $# -eq 1 ];then
 	FILEID=$1	
 else
